@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>관리자 - 가위바위보</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <div class="container wide">
+    <header class="topbar">
+      <div>
+        <h1>관리자</h1>
+        <div class="muted">사용자 상태 / 최근 라운드 로그</div>
+      </div>
+      <div class="top-actions">
+        <a class="link" href="/">입장</a>
+        <a class="link" href="/lobby">로비</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>사용자 목록(최근 200)</h2>
+        <table class="table">
+          <thead>
+            <tr><th>ID</th><th>이름</th><th>방</th><th>상태</th><th>생성</th><th>최근</th></tr>
+          </thead>
+          <tbody>
+            {% for u in users %}
+            <tr>
+              <td>{{ u.user_id }}</td>
+              <td>{{ u.name }}</td>
+              <td>{{ u.room_id if u.room_id else '-' }}</td>
+              <td>{{ u.status }}</td>
+              <td>{{ u.created_at }}</td>
+              <td>{{ u.last_seen_at }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>라운드 로그(최근 200)</h2>
+        <table class="table">
+          <thead>
+            <tr><th>Round</th><th>Match</th><th>시간</th><th>P1</th><th>P2</th><th>Winner</th><th>ResultType</th></tr>
+          </thead>
+          <tbody>
+            {% for r in rounds %}
+            <tr>
+              <td>{{ r.round_id }}</td>
+              <td>{{ r.match_id }}</td>
+              <td>{{ r.played_at }}</td>
+              <td>{{ r.p1_choice }}</td>
+              <td>{{ r.p2_choice }}</td>
+              <td>{{ r.winner_id if r.winner_id else "draw" }}</td>
+              <td>{{ r.result_type }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

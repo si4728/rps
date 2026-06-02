@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>가위바위보 - 로비</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <div class="container wide">
+    <header class="topbar">
+      <div>
+        <h1>로비</h1>
+        <div class="muted">내 이름: <b>{{ user.name }}</b> / 내 ID: <b>{{ user.user_id }}</b></div>
+      </div>
+      <div class="top-actions">
+        <a class="link" href="/">새로 입장</a>
+        <a class="link" href="/admin">관리자</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>매칭</h2>
+        <div id="status" class="status">연결 중...</div>
+
+        <div class="row">
+          <button id="btnJoin">매칭 시작</button>
+          <button id="btnEndMatch" class="secondary">매치 종료</button>
+          <button id="btnReset" class="secondary">새로고침(상태 초기화)</button>
+        </div>
+
+        <div class="divider"></div>
+        <h3>방(Room)</h3>
+        <div class="divider"></div>
+        <h3>초청 매칭</h3>
+        <div class="muted">같은 방의 대기(Idle) 사용자만 표시됩니다.</div>
+        <div class="row">
+          <select id="inviteSelect"></select>
+          <button id="btnInvite" class="secondary">초청</button>
+        </div>
+        <div class="muted" id="roomInfo">현재 방: (없음)</div>
+        <div class="row">
+          <select id="roomSelect"></select>
+          <button id="btnJoinRoom" class="secondary">방 참가</button>
+          <button id="btnLeaveRoom" class="secondary">방 나가기</button>
+        </div>
+        <div class="row">
+          <input id="roomName" type="text" placeholder="새 방 이름" maxlength="64"/>
+          <button id="btnCreateRoom" class="secondary">방 생성</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>게임</h3>
+        <div id="matchInfo" class="muted">아직 매칭되지 않았습니다.</div>
+
+        <div class="row choices">
+          <button class="choice" data-choice="rock" disabled>바위</button>
+          <button class="choice" data-choice="paper" disabled>보</button>
+          <button class="choice" data-choice="scissors" disabled>가위</button>
+        </div>
+
+        <div id="choiceStatus" class="muted">선택 대기</div>
+<div class="muted">남은 시간: <b id="timer">-</b>초</div>
+
+        <div class="divider"></div>
+
+        <h3>결과</h3>
+        <pre id="resultBox" class="result-box">-</pre>
+      </section>
+
+      <section class="card">
+        <h2>통계 / 랭킹 / 전적</h2>
+        <div class="stats-grid">
+          <div class="stat"><div class="label">승</div><div class="value" id="statWin">-</div></div>
+          <div class="stat"><div class="label">패</div><div class="value" id="statLose">-</div></div>
+          <div class="stat"><div class="label">무</div><div class="value" id="statDraw">-</div></div>
+          <div class="stat"><div class="label">승률</div><div class="value" id="statRate">-</div></div>
+        </div>
+        <div class="divider"></div>
+        <h3>개인 분석</h3>
+        <div class="analysis-grid">
+          <div class="stat"><div class="label">총 라운드</div><div class="value" id="analysisTotal">-</div></div>
+          <div class="stat"><div class="label">최근 승률</div><div class="value" id="analysisRecentRate">-</div></div>
+          <div class="stat"><div class="label">주 선택</div><div class="value" id="analysisFavorite">-</div></div>
+          <div class="stat"><div class="label">최고 선택</div><div class="value" id="analysisBest">-</div></div>
+        </div>
+        <ul id="analysisInsights" class="insights"></ul>
+        <table class="table" id="choiceAnalysisTable">
+          <thead><tr><th>선택</th><th>승</th><th>패</th><th>무</th><th>승률</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="divider"></div>
+        <h3>랭킹(Top 20)</h3>
+        <table class="table" id="rankingTable">
+          <thead><tr><th>순위</th><th>이름(ID)</th><th>승</th><th>패</th><th>무</th><th>승률</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="divider"></div>
+        <h3>최근 전적(20판)</h3>
+        <div class="muted">페이지를 열어두면 결과가 나올 때 자동으로 갱신됩니다.</div>
+        <table class="table" id="historyTable">
+          <thead>
+            <tr>
+              <th>시간</th>
+              <th>상대(ID)</th>
+              <th>내 선택</th>
+              <th>상대 선택</th>
+              <th>결과</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const USER_ID = {{ user.user_id }};
+  </script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
